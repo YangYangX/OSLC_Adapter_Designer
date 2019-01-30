@@ -1,0 +1,2 @@
+# OSLC_Adapter_Designer
+OSLC设配器图形化代码配置与生成工具
