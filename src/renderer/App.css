@@ -1,0 +1,16 @@
+*,
+*::after,
+*::before {
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-app-region: no-drag;
+  cursor: default;
+}
+
+* {
+  font-family: 'PingFang-SC-Regular';
+}
+
+.ui.tabular.menu .active.item {
+  border-radius: 0 0 0 0 !important;
+}

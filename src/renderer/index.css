@@ -1,0 +1,19 @@
+@font-face {
+  font-family: PingFang-SC-Regular;
+  src: url(./asserts/fonts/PingFang-SC-Regular.ttf) format('opentype');
+}
+
+@font-face {
+  font-family: PingFang-SC-Light;
+  src: url(./asserts/fonts/PingFang-SC-Light.ttf) format('opentype');
+}
+
+@font-face {
+  font-family: PingFang-SC-Bold;
+  src: url(./asserts/fonts/PingFang-SC-Bold.ttf) format('opentype');
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
