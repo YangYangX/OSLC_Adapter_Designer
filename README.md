@@ -1,6 +1,6 @@
 # OSLC_Adapter_Designer
 
-## OSLC 设配器图形化代码配置与生成工具
+## OSLC 适配器图形化代码配置与生成工具
 ### 开发平台： Windows 10
 
 ## 命令
