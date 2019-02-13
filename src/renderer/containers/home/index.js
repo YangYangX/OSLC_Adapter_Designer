@@ -85,10 +85,10 @@ class Home extends Component {
                       minimal={true}
                       icon={"cube-add"}
                       onClick={() => {
-                        ipcRenderer.send(
-                          "coreCentAppChannel-async",
-                          "createnewproject"
-                        );
+                        ipcRenderer.send("coreCentAppChannel-async", {
+                          view: "editor",
+                          extra: "createnew"
+                        });
                       }}
                     >
                       创建新项目
@@ -102,10 +102,9 @@ class Home extends Component {
                       minimal={true}
                       icon={"document-open"}
                       onClick={() => {
-                        ipcRenderer.send(
-                          "coreCentAppChannel-async",
-                          "createnewproject"
-                        );
+                        ipcRenderer.send("coreCentAppChannel-async", {
+                          view: "allprojects"
+                        });
                       }}
                     >
                       打开项目

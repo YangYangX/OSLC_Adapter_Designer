@@ -1,4 +1,6 @@
 import * as path from "path";
+import * as _ from "lodash";
+import * as queryString from "query-string";
 import { app, BrowserWindow, screen, ipcMain } from "electron";
 import installExtension, {
   REACT_DEVELOPER_TOOLS,
@@ -23,19 +25,14 @@ if (serve) {
 /**
  * IPC process message channel listeners
  */
-ipcMain.on("coreCentAppChannel-async", (event, arg) => {
-  switch (arg) {
-    case "createnewproject":
-      // Close welcome window
-      welcomeWindow.hide();
-      welcomeWindow.webContents.closeDevTools();
-      // Open editor window
-      createMainWindow();
-      break;
-
-    default:
-      break;
-  }
+ipcMain.on("coreCentAppChannel-async", (event, args) => {
+  // Close welcome window
+  welcomeWindow.hide();
+  welcomeWindow.webContents.closeDevTools();
+  createMainWindow({
+    view: _.has(args, "view") ? args.view : "allprojects",
+    extraview: _.has(args, "extra") ? args.extra : null
+  });
   event.returnValue = "success";
   //event.sender.send('createnewproject-reply', 'success');
 });
@@ -111,11 +108,15 @@ function createWelcomeWindow() {
   });
 }
 
-function createMainWindow() {
+function createMainWindow(options) {
   // 创建浏览器窗口。
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
+  const optionView = _.has(options, "view") ? options.view : "allprojects";
+  const optionExtraView = _.has(options, "extraview")
+    ? queryString.stringify({ extra: options.extraview })
+    : "";
   mainWindow = new BrowserWindow({
     x: 0,
     y: 3, //Fix: always show some spaces on top will make the window looking nicer.
@@ -141,7 +142,7 @@ function createMainWindow() {
   let editorScreenUrl = require("url").format({
     protocol: "file:",
     slashes: true,
-    hash: "editor",
+    hash: optionView + "?" + optionExtraView,
     pathname: appRootPath
   });
 

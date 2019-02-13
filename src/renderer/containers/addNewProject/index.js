@@ -5,13 +5,13 @@
  * This component is the home page not found page.
  */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import { Link } from 'react-router-dom';
-import { push } from 'connected-react-router';
-import _ from 'lodash';
+import { Link } from "react-router-dom";
+import { push } from "connected-react-router";
+import _ from "lodash";
 
 // UI Framework
 import {
@@ -34,31 +34,30 @@ import {
   Navbar,
   Divider,
   NavbarGroup,
-  NavbarHeading,
-} from '@blueprintjs/core';
+  NavbarHeading
+} from "@blueprintjs/core";
 
-import { Grid, Button as SemanticButton } from 'semantic-ui-react';
+import { Grid, Button as SemanticButton } from "semantic-ui-react";
 
-import { appIcon, logoAbout, docIcon } from '../../asserts';
+import { appIcon, logoAbout, docIcon } from "../../asserts";
+
+// Actions
+import { updateWizardStatus, updateReset } from "./actions";
+
+// Selectors
+import {
+  addNewProjectWizardStatusSelector,
+  addNewProjectResetSelector
+} from "./selectors";
 
 // Style
-import Styles from './style';
+import Styles from "./style";
 
 // Class Home, basic component for application
 class AddNewProject extends Component {
-  state = {
-    dialogOpen: false,
-    showS1: true,
-  };
-  selectedProject = 'oslcBlankProject';
+  selectedProject = "oslcBlankProject";
   selectedProjectDesc =
-    '普通OSLC Adapter适配器空白项目，项目初始化包含一个Root Service，在项目创建过程中可添加其他Service以及Provider，并在项目中定义Resource。';
-
-  /**
-   *
-   * 临时设置，需要被action替代
-   */
-  showS1 = true;
+    "普通OSLC Adapter适配器空白项目，项目初始化包含一个Root Service，在项目创建过程中可添加其他Service以及Provider，并在项目中定义Resource。";
 
   /**
    * constructor function
@@ -70,16 +69,11 @@ class AddNewProject extends Component {
     this._renderCreateWizardStep2 = this._renderCreateWizardStep2.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({ dialogOpen: this.props.isOpen });
-  }
-
-  componentWillReceiveProps() {
-    const { isOpen } = this.props;
-    this.setState({ dialogOpen: isOpen });
-  }
+  componentDidMount() {}
 
   _renderCreateWizardStep1 = () => {
+    const { updateWizardStatus, updateReset } = this.props;
+    const { reset } = this.props;
     return (
       <Card elevation={0} interactive={false} style={Styles.mainSectionContent}>
         <Grid>
@@ -169,7 +163,7 @@ class AddNewProject extends Component {
                         rightIcon="arrow-right"
                         intent={Intent.PRIMARY}
                         onClick={() => {
-                          this.setState({ showS1: false });
+                          updateReset(false);
                         }}
                       >
                         下一步
@@ -186,6 +180,8 @@ class AddNewProject extends Component {
   };
 
   _renderCreateWizardStep2 = () => {
+    const { updateWizardStatus, updateReset } = this.props;
+    const { reset } = this.props;
     return (
       <Card elevation={0} interactive={false} style={Styles.mainSectionContent}>
         <Grid>
@@ -265,12 +261,12 @@ class AddNewProject extends Component {
                           <div style={Styles.workAreaForm}>
                             <FormGroup
                               disabled={false}
-                              helperText={'对其他设置的说明文字...'}
+                              helperText={"对其他设置的说明文字..."}
                               inline={true}
                               intent={Intent.SUCCESS}
-                              label={'其他设置'}
+                              label={"其他设置"}
                               labelFor="text-input"
-                              labelInfo={'(必须)'}
+                              labelInfo={"(必须)"}
                             >
                               <Switch
                                 id="text-input"
@@ -300,7 +296,7 @@ class AddNewProject extends Component {
                       icon="arrow-left"
                       intent={Intent.PRIMARY}
                       onClick={() => {
-                        this.setState({ showS1: true });
+                        updateReset(true);
                       }}
                     >
                       上一步
@@ -312,7 +308,8 @@ class AddNewProject extends Component {
                       rightIcon="confirm"
                       intent={Intent.PRIMARY}
                       onClick={() => {
-                        this.setState({ dialogOpen: false, showS1: true });
+                        updateWizardStatus(false);
+                        updateReset(true);
                       }}
                     >
                       确定
@@ -328,19 +325,20 @@ class AddNewProject extends Component {
   };
 
   render() {
-    const { navTo } = this.props;
+    const { navTo, wizardEnabled, reset } = this.props;
+    const { updateWizardStatus } = this.props;
     return (
       <Dialog
         icon="cube-add"
         title="创建..."
         onClose={() => {
-          this.setState({ dialogOpen: false, showS1: true });
+          updateWizardStatus(false);
         }}
         autoFocus={true}
         canEscapeKeyClose={false}
         canOutsideClickClose={false}
         enforceFocus={true}
-        isOpen={this.state.dialogOpen}
+        isOpen={wizardEnabled}
         usePortal={true}
         style={Styles.createNewProjectDialog}
       >
@@ -348,8 +346,8 @@ class AddNewProject extends Component {
           className={Classes.DIALOG_BODY}
           style={Styles.mainSectionContentContainer}
         >
-          {this.state.showS1 ? this._renderCreateWizardStep1() : null}
-          {!this.state.showS1 ? this._renderCreateWizardStep2() : null}
+          {reset ? this._renderCreateWizardStep1() : null}
+          {!reset ? this._renderCreateWizardStep2() : null}
         </div>
       </Dialog>
     );
@@ -368,7 +366,10 @@ AddNewProject.propTypes = {};
  *
  * @param {*} state
  */
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  wizardEnabled: addNewProjectWizardStatusSelector(state),
+  reset: addNewProjectResetSelector(state)
+});
 
 /**
  * mapDispatchToProps is a function provided to make use of the store's dispatch function,
@@ -379,6 +380,8 @@ const mapStateToProps = state => ({});
  */
 const mapDispatchToProps = dispatch => ({
   navTo: location => dispatch(push(location)),
+  updateWizardStatus: status => dispatch(updateWizardStatus(status)),
+  updateReset: status => dispatch(updateReset(status))
 });
 
 // Export Home container

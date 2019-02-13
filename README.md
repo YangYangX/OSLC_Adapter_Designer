@@ -1,6 +1,7 @@
 # OSLC_Adapter_Designer
 
 ## OSLC 适配器图形化代码配置与生成工具
+
 ### 开发平台： Windows 10
 
 ## 命令
@@ -33,15 +34,11 @@
 
 ## 其他内容:
 
-### 目前项目仅仅包含 UI 概念的演示，有一些临时的 Bug 会在使用 redux-action 后移除。
+## 目前进展:
 
-### 由于 State 更新的问题，需要点击两次才能打开新建项目的引导窗口
+### 为 Container 添加 Redux 支持
 
 ## 下一步工作
-
-### 完善 UI
-
-### 填充内核，移除 UI 概念代码，添加 action 支持
 
 ### 集成 OSLC_Adapter_Generator
 

@@ -6,31 +6,31 @@
  * contain code that should be seem on all pages.(e.g. navigation bar, topbar and etc.)
  */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
+import { withRouter } from "react-router-dom";
 // Import routes
-import routes from '../../configure/routes';
+import routes from "../../configure/routes";
 
 // Style
 
 // Class Framework, basic component for application
 class Framework extends Component {
-    /**
-     * constructor function
-     * @param {*} props
-     */
-    constructor(props) {
-        super(props);
-    }
+  /**
+   * constructor function
+   * @param {*} props
+   */
+  constructor(props) {
+    super(props);
+  }
 
-    componentWillMount() {}
+  componentWillMount() {}
 
-    render() {
-        return <div>{routes}</div>;
-    }
+  render() {
+    return <div>{routes}</div>;
+  }
 }
 
 // Default props
@@ -55,7 +55,7 @@ const mapStateToProps = state => ({});
  * @param {*} dispatch
  */
 const mapDispatchToProps = dispatch => ({
-    navTo: location => dispatch(push(location)),
+  navTo: location => dispatch(push(location))
 });
 
 // Connect Switch to store to pass location down to each Routes.
@@ -63,10 +63,10 @@ const mapDispatchToProps = dispatch => ({
 
 // Export Framework container
 export default withRouter(
-    connect(
-        mapStateToProps,
-        mapDispatchToProps,
-        null,
-        { pure: false }
-    )(Framework)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+    null,
+    { pure: false }
+  )(Framework)
 );
