@@ -5,13 +5,13 @@
  * This component is the home page not found page.
  */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import { Link } from 'react-router-dom';
-import { push } from 'connected-react-router';
-import _ from 'lodash';
+import { Link } from "react-router-dom";
+import { push } from "connected-react-router";
+import _ from "lodash";
 
 // UI Framework
 import {
@@ -42,19 +42,22 @@ import {
   Menu,
   MenuDivider,
   MenuItem,
-  Popover,
-} from '@blueprintjs/core';
-import { ItemRenderer, MultiSelect } from '@blueprintjs/select';
+  Popover
+} from "@blueprintjs/core";
+import { ItemRenderer, MultiSelect } from "@blueprintjs/select";
 
-import { Grid, Button as SemanticButton, Tab } from 'semantic-ui-react';
+import { Grid, Button as SemanticButton, Tab } from "semantic-ui-react";
 
-import { appIcon, logoAbout, docIcon } from '../../asserts';
+import { appIcon, logoAbout, docIcon } from "../../asserts";
 
 // Style
-import Styles from './style';
+import Styles from "./style";
 
 // Components
-import AddNewProject from '../addNewProject';
+import AddNewProject from "../addNewProject";
+
+// Actions
+import { updateWizardStatus } from "../addNewProject/actions";
 
 // Class Home, basic component for application
 class Editor extends Component {
@@ -62,59 +65,59 @@ class Editor extends Component {
     shareProjectalert: false,
     loginAlert: false,
     aboutDialogOpen: false,
-    addnewprojectDialog: false,
+    addnewprojectDialog: false
   };
-  selectedProject = 'oslcBlankProject';
+  selectedProject = "oslcBlankProject";
   selectedProjectDesc =
-    '普通OSLC Adapter适配器空白项目，项目初始化包含一个Root Service，在项目创建过程中可添加其他Service以及Provider，并在项目中定义Resource。';
+    "普通OSLC Adapter适配器空白项目，项目初始化包含一个Root Service，在项目创建过程中可添加其他Service以及Provider，并在项目中定义Resource。";
   INITIAL_STATE = [
     {
       id: 1,
-      icon: 'folder-close',
-      label: 'Root Service',
+      icon: "folder-close",
+      label: "Root Service",
 
       isExpanded: true,
       childNodes: [
         {
           id: 2,
-          icon: 'document',
-          label: 'Provider 1',
+          icon: "document",
+          label: "Provider 1"
         },
         {
           id: 3,
-          icon: 'document',
-          label: 'Provider 2',
+          icon: "document",
+          label: "Provider 2"
         },
         {
           id: 4,
           hasCaret: true,
           isSelected: true,
-          icon: 'folder-close',
-          label: 'Service 3',
+          icon: "folder-close",
+          label: "Service 3",
           isExpanded: true,
           childNodes: [
             {
               id: 5,
-              icon: 'document',
-              label: 'Provider 1',
+              icon: "document",
+              label: "Provider 1"
             },
             {
               id: 6,
-              icon: 'document',
-              label: 'Provider 2',
+              icon: "document",
+              label: "Provider 2"
             },
             {
               id: 7,
               hasCaret: true,
-              icon: 'folder-close',
-              label: 'Service 4',
+              icon: "folder-close",
+              label: "Service 4",
               isExpanded: true,
-              childNodes: [{ id: 8, icon: 'document', label: 'Provider 4' }],
-            },
-          ],
-        },
-      ],
-    },
+              childNodes: [{ id: 8, icon: "document", label: "Provider 4" }]
+            }
+          ]
+        }
+      ]
+    }
   ];
   /**
    * constructor function
@@ -197,7 +200,7 @@ class Editor extends Component {
       <Menu>
         <MenuItem icon="flow-linear" text="添加 Service" />
         <MenuItem icon="flow-end" text="添加 Provider" />
-        <MenuDivider title={'编辑'} />
+        <MenuDivider title={"编辑"} />
         <MenuItem icon="graph-remove" text="删除" />
         <MenuItem icon="cog" text="设置" />
       </Menu>,
@@ -212,7 +215,7 @@ class Editor extends Component {
         text="新建..."
         shouldDismissPopover={true}
         onClick={() => {
-          this.setState({ addnewprojectDialog: true });
+          this.props.updateWizardStatus(true);
         }}
       />
       <MenuItem
@@ -220,7 +223,7 @@ class Editor extends Component {
         text="所有项目"
         shouldDismissPopover={true}
         onClick={() => {
-          this.props.navTo('/allprojects');
+          this.props.navTo("/allprojects");
         }}
       />
       <MenuItem
@@ -315,7 +318,7 @@ class Editor extends Component {
               isOpen={this.state.loginAlert}
               onClose={() => {
                 this.setState({
-                  loginAlert: false,
+                  loginAlert: false
                 });
               }}
             >
@@ -335,9 +338,9 @@ class Editor extends Component {
                 panes={[
                   {
                     menuItem: {
-                      key: 'service',
-                      icon: 'file code outline',
-                      content: '服务',
+                      key: "service",
+                      icon: "file code outline",
+                      content: "服务"
                     },
                     render: () => (
                       <Tab.Pane as="div" style={Styles.tabContent}>
@@ -348,20 +351,20 @@ class Editor extends Component {
                           onNodeContextMenu={this.showContextMenu}
                         />
                       </Tab.Pane>
-                    ),
+                    )
                   },
                   {
                     menuItem: {
-                      key: 'resource',
-                      icon: 'file alternate outline',
-                      content: '资源',
+                      key: "resource",
+                      icon: "file alternate outline",
+                      content: "资源"
                     },
                     render: () => (
                       <Tab.Pane as="div" style={Styles.tabContent}>
                         TODO: 资源列表
                       </Tab.Pane>
-                    ),
-                  },
+                    )
+                  }
                 ]}
               />
             </Grid.Column>
@@ -377,7 +380,7 @@ class Editor extends Component {
                     <br />
                     <Callout
                       intent={Intent.WARNING}
-                      title={'提示信息'}
+                      title={"提示信息"}
                       icon="info-sign"
                     >
                       放置一些提示信息， 放置一些提示信息， 放置一些提示信息，
@@ -424,7 +427,7 @@ class Editor extends Component {
                     <Label>资源:</Label>
 
                     <br />
-                    <div style={{ textAlign: 'right' }}>
+                    <div style={{ textAlign: "right" }}>
                       <Button intent={Intent.SUCCESS} icon="floppy-disk">
                         保存
                       </Button>
@@ -466,6 +469,7 @@ const mapStateToProps = state => ({});
  */
 const mapDispatchToProps = dispatch => ({
   navTo: location => dispatch(push(location)),
+  updateWizardStatus: status => dispatch(updateWizardStatus(status))
 });
 
 // Export Home container
