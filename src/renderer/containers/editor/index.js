@@ -37,7 +37,7 @@ import {
   FormGroup,
   InputGroup,
   ContextMenu,
-  Pre,
+  NonIdealState,
   Tree,
   NavbarGroup,
   NavbarHeading,
@@ -60,6 +60,7 @@ import AddNewProject from "../addNewProject";
 
 // Actions
 import { updateWizardStatus } from "../addNewProject/actions";
+import { identity } from "rxjs";
 
 // Class Home, basic component for application
 class Editor extends Component {
@@ -130,6 +131,50 @@ class Editor extends Component {
     this._renderAboutDialog = this._renderAboutDialog.bind(this);
     this.FileMenu = this.FileMenu.bind(this);
   }
+
+  _NonIdealState = () => {
+    const { updateWizardStatus } = this.props;
+    return (
+      <NonIdealState
+        icon={"folder-open"}
+        title={<p style={Styles.nonidealStateDesc}>新建项目</p>}
+        description={
+          <p style={Styles.nonidealStateDesc}>创建一个新的OSLC适配器项目</p>
+        }
+        action={
+          <Button
+            icon="new-object"
+            intent={Intent.PRIMARY}
+            onClick={() => {
+              updateWizardStatus(true);
+            }}
+          >
+            新建项目
+          </Button>
+        }
+      />
+    );
+  };
+
+  _NonIdealStateForProjectSetting = () => {
+    return (
+      <div>
+        <br />
+        <br />
+        <NonIdealState
+          icon={"cog"}
+          title={<p style={Styles.nonidealStateMainTitle}>项目设置</p>}
+          description={
+            <p style={Styles.nonidealStateMainDesc}>
+              要开始一个新的OSLC适配器代码生成项目，请先在项目创建引导界面中创建项目，
+              然后根据界面上显示的设置完成对OSLC适配器的设计，完成项目后，可编译项目生成
+              用于产生java代码的json文件，或直接生成java代码包.
+            </p>
+          }
+        />
+      </div>
+    );
+  };
 
   componentDidMount() {
     const { location } = this.props;
@@ -359,12 +404,7 @@ class Editor extends Component {
                     },
                     render: () => (
                       <Tab.Pane as="div" style={Styles.tabContent}>
-                        <Tree
-                          contents={this.INITIAL_STATE}
-                          onNodeCollapse={this.handleNodeCollapse}
-                          onNodeExpand={this.handleNodeExpand}
-                          onNodeContextMenu={this.showContextMenu}
-                        />
+                        {this._NonIdealState()}
                       </Tab.Pane>
                     )
                   },
@@ -375,9 +415,7 @@ class Editor extends Component {
                       content: "资源"
                     },
                     render: () => (
-                      <Tab.Pane as="div" style={Styles.tabContent}>
-                        TODO: 资源列表
-                      </Tab.Pane>
+                      <Tab.Pane as="div" style={Styles.tabContent} />
                     )
                   }
                 ]}
@@ -390,64 +428,7 @@ class Editor extends Component {
                     width={16}
                     style={Styles.mainSectionTitleContainer}
                   >
-                    <span style={Styles.mainSectionTitle}>设置</span>
-                    <Divider />
-                    <br />
-                    <Callout
-                      intent={Intent.WARNING}
-                      title={"提示信息"}
-                      icon="info-sign"
-                    >
-                      放置一些提示信息， 放置一些提示信息， 放置一些提示信息，
-                      放置一些提示信息， 放置一些提示信息， 放置一些提示信息，
-                      放置一些提示信息， 放置一些提示信息， 放置一些提示信息，
-                      放置一些提示信息， 放置一些提示信息， 放置一些提示信息，
-                    </Callout>
-                    <br />
-                    <FormGroup
-                      helperText="Service名称."
-                      label="Service名称"
-                      labelFor="text-input"
-                      labelInfo="(*必须)"
-                    >
-                      <InputGroup id="text-input" placeholder="Service1" />
-                    </FormGroup>
-                    <FormGroup
-                      helperText="Service ID是由系统自动生成的唯一标识码."
-                      label="Service ID"
-                      labelFor="text-input"
-                      labelInfo="(*必须)"
-                    >
-                      <InputGroup
-                        disabled={true}
-                        id="text-input"
-                        placeholder="Service ca716a9e-747b-48ed-89b2-10f53753875d"
-                      />
-                    </FormGroup>
-                    <FormGroup
-                      helperText="Service相关字段."
-                      label="Service其他字段"
-                      labelFor="text-input"
-                      labelInfo=""
-                    >
-                      <InputGroup id="text-input" placeholder="其他字段" />
-                    </FormGroup>
-                    <Divider />
-                    <Label>一组选项：</Label>
-                    <Checkbox>某个选项1</Checkbox>
-                    <Checkbox>某个选项2</Checkbox>
-                    <Checkbox>某个选项3</Checkbox>
-                    <Checkbox>某个选项4</Checkbox>
-                    <Divider />
-                    <Label>资源:</Label>
-
-                    <br />
-                    <div style={{ textAlign: "right" }}>
-                      <Button intent={Intent.SUCCESS} icon="floppy-disk">
-                        保存
-                      </Button>
-                    </div>
-                    <br />
+                    {this._NonIdealStateForProjectSetting()}
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
