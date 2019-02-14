@@ -14,6 +14,5 @@
 
 export const UPDATE_WIZARD_STATUS =
   "OSLC_ADAPTER_DESIGNER/addNewProject/actions/UPDATE_WIZARD_STATUS";
-
 export const UPDATE_RESET =
   "OSLC_ADAPTER_DESIGNER/addNewProject/actions/UPDATE_RESET";
