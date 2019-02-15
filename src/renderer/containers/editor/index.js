@@ -136,7 +136,7 @@ class Editor extends Component {
     const { navTo } = this.props;
     return (
       <div style={Styles.screen}>
-        <AppNavbar />
+        <AppNavbar showProjectMenu={true} />
         <Grid centered style={Styles.container}>
           <Grid.Row>
             <Grid.Column width={3} style={Styles.leftSection}>

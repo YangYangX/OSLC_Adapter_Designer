@@ -134,7 +134,7 @@ class AppNavbar extends Component {
   );
 
   render() {
-    const { navTo } = this.props;
+    const { navTo, showProjectMenu } = this.props;
 
     return (
       <Navbar fixedToTop={true} style={Styles.navbar}>
@@ -150,9 +150,11 @@ class AppNavbar extends Component {
             <Button minimal={true} icon="document" text="文件" />
           </Popover>
 
-          <Popover content={this.ProjectMenu()} position={Position.BOTTOM}>
-            <Button minimal={true} icon="code-block" text="项目" />
-          </Popover>
+          {showProjectMenu ? (
+            <Popover content={this.ProjectMenu()} position={Position.BOTTOM}>
+              <Button minimal={true} icon="code-block" text="项目" />
+            </Popover>
+          ) : null}
 
           <Popover content={this.SystemMenu()} position={Position.BOTTOM}>
             <Button minimal={true} icon="applications" text="系统" />
