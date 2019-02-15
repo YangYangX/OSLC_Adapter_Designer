@@ -113,7 +113,8 @@ export default {
   workAreaMainS2: {
     margin: "1rem 0 0 -0.5rem",
     height: contentHeight * 0.7,
-    borderBottom: "1px solid #999"
+    borderBottom: "1px solid #999",
+    overflow: "auto"
   },
   workAreaActionS2: {
     margin: "0 0 0 -0.5rem",
@@ -177,10 +178,14 @@ export default {
     marginRight: "1rem"
   },
   workAreaFormComponent: {
-    width: window.innerWidth * 0.58
+    width: window.innerWidth * 0.57
   },
   workAreaFormProperties: {
     marginTop: "1rem",
     marginBottom: "1rem"
+  },
+  SpinnerContainer: {
+    width: "50rem",
+    backgroundColor: "#ff00ff"
   }
 };

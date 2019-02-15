@@ -5,13 +5,13 @@
  * This component is the home page not found page.
  */
 
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import { Link } from 'react-router-dom';
-import { push } from 'connected-react-router';
-import _ from 'lodash';
+import { Link } from "react-router-dom";
+import { push } from "connected-react-router";
+import _ from "lodash";
 
 // UI Framework
 import {
@@ -29,22 +29,24 @@ import {
   Navbar,
   Divider,
   NavbarGroup,
-  NavbarHeading,
-} from '@blueprintjs/core';
+  NavbarHeading
+} from "@blueprintjs/core";
 
-import { Grid, Button as SemanticButton } from 'semantic-ui-react';
+import { Grid, Button as SemanticButton } from "semantic-ui-react";
 
-import { appIcon, logoAbout, docIcon } from '../../asserts';
+import { appIcon, logoAbout, docIcon } from "../../asserts";
 
 // Style
-import Styles from './style';
+import Styles from "./style";
+
+// Actions
+import { updateAboutDialogStatus } from "./actions";
+
+// Selectors
+import { aboutDialogStatusSelector } from "./selectors";
 
 // Class Home, basic component for application
 class About extends Component {
-  state = {
-    aboutDialogOpen: false,
-  };
-
   /**
    * constructor function
    * @param {*} props
@@ -60,12 +62,14 @@ class About extends Component {
       <Dialog
         icon="info-sign"
         title="关于"
-        onClose={() => {}}
+        onClose={() => {
+          this.props.updateAboutDialogStatus(false);
+        }}
         autoFocus={true}
         canEscapeKeyClose={false}
         canOutsideClickClose={false}
         enforceFocus={true}
-        isOpen={this.props.isOpen}
+        isOpen={this.props.aboutDialogStatus}
         usePortal={true}
         style={Styles.AboutDialog}
       >
@@ -97,7 +101,9 @@ class About extends Component {
             <Tooltip content="关闭对话框">
               <Button
                 intent={Intent.DANGER}
-                onClick={() => this.setState({ aboutDialogOpen: false })}
+                onClick={() => {
+                  this.props.updateAboutDialogStatus(false);
+                }}
               >
                 关闭
               </Button>
@@ -126,7 +132,9 @@ About.propTypes = {};
  *
  * @param {*} state
  */
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  aboutDialogStatus: aboutDialogStatusSelector(state)
+});
 
 /**
  * mapDispatchToProps is a function provided to make use of the store's dispatch function,
@@ -137,6 +145,7 @@ const mapStateToProps = state => ({});
  */
 const mapDispatchToProps = dispatch => ({
   navTo: location => dispatch(push(location)),
+  updateAboutDialogStatus: status => dispatch(updateAboutDialogStatus(status))
 });
 
 // Export Home container

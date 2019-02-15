@@ -28,6 +28,7 @@ import {
   FileInput,
   Label,
   Switch,
+  Spinner,
   Dialog,
   Tooltip,
   Position,
@@ -179,6 +180,10 @@ class AddNewProject extends Component {
     );
   };
 
+  _renderCreatingProjectLoader = () => {
+    return <div style={{ width: "300px", backgroundColor: "#00ff00" }} />;
+  };
+
   _renderCreateWizardStep2 = () => {
     const { updateWizardStatus, updateReset } = this.props;
     const { reset } = this.props;
@@ -201,8 +206,8 @@ class AddNewProject extends Component {
                           <br />
                           <div style={Styles.workAreaForm}>
                             <FormGroup
-                              helperText="Service ID"
-                              label="Service ID"
+                              helperText="适配器 ID"
+                              label="适配器 ID"
                               labelFor="text-input"
                               labelInfo="(*必须)"
                             >
@@ -213,14 +218,14 @@ class AddNewProject extends Component {
                               />
                             </FormGroup>
                             <FormGroup
-                              helperText="Service名称."
-                              label="Service名称"
+                              helperText="适配器名称."
+                              label="适配器名称"
                               labelFor="text-input"
                               labelInfo="(*必须)"
                             >
                               <InputGroup
                                 id="text-input"
-                                placeholder="Service1"
+                                placeholder="Adapter1"
                               />
                             </FormGroup>
                             <Checkbox checked={true}>使用默认路径</Checkbox>
@@ -237,6 +242,49 @@ class AddNewProject extends Component {
                                 fill={true}
                               />
                             </FormGroup>
+                            <FormGroup
+                              helperText="OSLC 服务 Domain."
+                              label="OSLC 服务 Domain"
+                              labelFor="text-input"
+                              labelInfo="(*必须)"
+                            >
+                              <InputGroup
+                                id="text-input"
+                                placeholder="http://oslcadapter.com/ns/sample#"
+                              />
+                            </FormGroup>
+                            <FormGroup
+                              helperText="OSLC 服务 Domain Alias."
+                              label="OSLC 服务 Domain Alias"
+                              labelFor="text-input"
+                              labelInfo="(*必须)"
+                            >
+                              <InputGroup
+                                id="text-input"
+                                placeholder="oslcadapter-sample"
+                              />
+                            </FormGroup>
+
+                            <FormGroup
+                              helperText="Java NS Base."
+                              label="Java NS Base"
+                              labelFor="text-input"
+                              labelInfo="(*必须)"
+                            >
+                              <InputGroup
+                                id="text-input"
+                                placeholder="com.sample.adapter1"
+                              />
+                            </FormGroup>
+
+                            <FormGroup
+                              helperText="运行端口."
+                              label="端口"
+                              labelFor="text-input"
+                              labelInfo="(*必须)"
+                            >
+                              <InputGroup id="text-input" placeholder="8080" />
+                            </FormGroup>
                             <Divider />
                           </div>
                         </Grid.Column>
@@ -251,9 +299,7 @@ class AddNewProject extends Component {
 
                         <Grid.Column width={8}>
                           <div style={Styles.workAreaForm}>
-                            <Checkbox checked={false}>
-                              使用根节点Root Service
-                            </Checkbox>
+                            <Checkbox>使用根节点Root Service</Checkbox>
                           </div>
                         </Grid.Column>
 
@@ -261,21 +307,17 @@ class AddNewProject extends Component {
                           <div style={Styles.workAreaForm}>
                             <FormGroup
                               disabled={false}
-                              helperText={"对其他设置的说明文字..."}
+                              helperText={
+                                "项目成功创建后进行编译生成初始json文件."
+                              }
                               inline={true}
                               intent={Intent.SUCCESS}
                               label={"其他设置"}
                               labelFor="text-input"
-                              labelInfo={"(必须)"}
                             >
                               <Switch
                                 id="text-input"
-                                label="设置1"
-                                disabled={false}
-                              />
-                              <Switch
-                                id="text-input"
-                                label="设置2"
+                                label="创建完成后编译"
                                 disabled={false}
                               />
                             </FormGroup>
@@ -348,6 +390,7 @@ class AddNewProject extends Component {
         >
           {reset ? this._renderCreateWizardStep1() : null}
           {!reset ? this._renderCreateWizardStep2() : null}
+          {this._renderCreatingProjectLoader()}
         </div>
       </Dialog>
     );
