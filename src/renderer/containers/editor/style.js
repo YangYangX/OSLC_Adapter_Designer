@@ -10,9 +10,7 @@ export default {
     height: "100vh",
     minHeight: "100vh"
   },
-  navbar: {
-    height: "50px"
-  },
+
   container: {
     padding: "50px 0 0 0",
     backgroundColor: "#f2f2f2",
@@ -33,9 +31,6 @@ export default {
     marginTop: "45px",
     fontFamily: "PingFang-SC-Bold",
     fontSize: 12
-  },
-  logoNavbar: {
-    height: "45px"
   },
   leftSection: {
     backgroundColor: "#ebedf0",

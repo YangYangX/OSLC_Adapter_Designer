@@ -12,5 +12,5 @@
  * export const ACTION_CONTSTANT = 'project/container/ACTION_CONSTANT'
  */
 
-export const ABOUT_DIALOG_STATUS =
-  "OSLC_ADAPTER_DESIGNER/about/actions/ABOUT_DIALOG_STATUS";
+export const OVERLAY_STATUS =
+  "OSLC_ADAPTER_DESIGNER/overlay/actions/OVERLAY_STATUS";

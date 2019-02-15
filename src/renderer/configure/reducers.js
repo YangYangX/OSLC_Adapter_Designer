@@ -15,11 +15,13 @@ import { connectRouter } from "connected-react-router/immutable";
 // App reducers
 import addNewProjectReducer from "../containers/addNewProject/reducers";
 import aboutReducer from "../containers/about/reducers";
+import overlayReducer from "../containers/overlay/reducers";
 
 // App Reducers handles application system level states.
 const systemReducers = combineReducers({
   addNewProject: addNewProjectReducer,
-  about: aboutReducer
+  about: aboutReducer,
+  overlay: overlayReducer
 });
 
 /**

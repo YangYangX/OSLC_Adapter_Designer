@@ -44,6 +44,7 @@ import { appIcon, logoAbout, docIcon } from "../../asserts";
 
 // Actions
 import { updateWizardStatus, updateReset } from "./actions";
+import { updateOverlayStatus } from "../overlay/actions";
 
 // Selectors
 import {
@@ -352,6 +353,14 @@ class AddNewProject extends Component {
                       onClick={() => {
                         updateWizardStatus(false);
                         updateReset(true);
+                        this.props.updateOverlayStatus(
+                          true,
+                          "正在创建新的项目..."
+                        );
+
+                        setTimeout(() => {
+                          this.props.updateOverlayStatus(false);
+                        }, 2000);
                       }}
                     >
                       确定
@@ -424,7 +433,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   navTo: location => dispatch(push(location)),
   updateWizardStatus: status => dispatch(updateWizardStatus(status)),
-  updateReset: status => dispatch(updateReset(status))
+  updateReset: status => dispatch(updateReset(status)),
+  updateOverlayStatus: (status, message) =>
+    dispatch(updateOverlayStatus(status, message))
 });
 
 // Export Home container
