@@ -188,8 +188,7 @@ class AllProjects extends Component {
 
         <Grid centered style={Styles.container}>
           <Grid.Row>
-            <Grid.Column width={3} style={Styles.leftSection} />
-            <Grid.Column width={13} style={Styles.mainSection}>
+            <Grid.Column width={16} style={Styles.mainSection}>
               <Grid>
                 <Grid.Row style={Styles.workAreaMain}>
                   <Grid.Column width={16} style={Styles.workAreaMainTop}>
@@ -214,17 +213,17 @@ class AllProjects extends Component {
                             <Form.Group widths="equal">
                               <Form.Input
                                 fluid
-                                label="项目ID"
+                                label="项目ID:"
                                 placeholder="项目ID"
                               />
                               <Form.Input
                                 fluid
-                                label="项目名称"
+                                label="项目名称:"
                                 placeholder="项目名称"
                               />
                             </Form.Group>
                             <Form.Group inline>
-                              <label>在线状态</label>
+                              <label>在线状态:</label>
                               <Form.Radio
                                 label="本地项目"
                                 value="offline"
